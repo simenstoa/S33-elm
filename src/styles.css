@@ -1,0 +1,53 @@
+@font-face {
+	font-family: Dense-Regular;
+	src: url("fonts/Dense-Regular.otf") format("opentype");
+}
+
+html {
+	font-family: Dense-regular;
+}
+
+body {
+    background-color: rgb(246,161,14);
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    position: relative;
+    background-color: white;
+    width: 960px;
+    height: 100px;
+    margin: 0 auto;
+    display: flex;
+    font-weight: normal;
+}
+
+.header-text-large {
+    position: absolute;
+    font-size: 85px;
+    bottom: -6px;
+    left: 110px;
+}
+
+.header-text-medium {
+    position: absolute;
+    font-size: 45px;
+    bottom: 3px;
+    left: 228px;
+}
+
+.section {
+    width: 960px;
+    min-height: 1000px;
+    margin: 10px auto;
+    padding: 10px 0;
+    background-color: white;
+}
+
+.calculator-section {
+    width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: rgba(235,235,235,8);
+}
