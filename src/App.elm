@@ -17,7 +17,7 @@ type alias Model =
 
 initialModel : Routing.Route -> Model
 initialModel route =
-    { alcCalc = AlcCalc.model, route = route }
+    { alcCalc = AlcCalc.initialModel, route = route }
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )

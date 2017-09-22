@@ -72,3 +72,17 @@ body {
   padding: 20px;
   background-color: rgba(235, 235, 235, 8);
 }
+
+.calculator {
+  display: flex;
+}
+
+.calculator > input {
+  margin-right: 2px;
+  padding: 4px;
+}
+
+.calculator > div {
+  line-height: 25px;
+  margin-right: 2px;
+}

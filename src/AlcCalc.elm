@@ -13,19 +13,17 @@ type Type
 
 type Msg
     = Change Type String
-    | CalculateAlcVol
 
 
 type alias Model =
-    { originalGravity : Float
-    , finalGravity : Float
-    , alcVol : Float
+    { originalGravity : String
+    , finalGravity : String
     }
 
 
-model : Model
-model =
-    { originalGravity = 1.05, finalGravity = 1.01, alcVol = calcAlcVol 1.05 1.01 }
+initialModel : Model
+initialModel =
+    { originalGravity = "1.050", finalGravity = "1.010" }
 
 
 parseFloat : String -> Float
@@ -33,9 +31,19 @@ parseFloat string =
     string |> String.toFloat |> Result.withDefault 0
 
 
-calcAlcVol : Float -> Float -> Float
+calcAlcVol : String -> String -> Float
 calcAlcVol og fg =
-    ((og - fg) / 0.75) * 100
+    let
+        parsedOG =
+            parseFloat og
+
+        parsedFG =
+            parseFloat fg
+    in
+        if (parsedFG == 0 || parsedOG == 0) then
+            0
+        else
+            ((parsedOG - parsedFG) / 0.75) * 100
 
 
 sliceAndConcat : List String -> String
@@ -70,29 +78,43 @@ update msg model =
         Change gravityType string ->
             case gravityType of
                 OG ->
-                    { model | originalGravity = parseFloat string }
+                    { model | originalGravity = string }
 
                 FG ->
-                    { model | finalGravity = parseFloat string }
-
-        CalculateAlcVol ->
-            { model | alcVol = calcAlcVol model.originalGravity model.finalGravity }
+                    { model | finalGravity = string }
 
 
-myH3 : Model -> Html Msg
-myH3 model =
-    if model.alcVol > 0 then
-        h3 [] [ text (floatToFixedString model.alcVol) ]
-    else
-        div [] []
+viewAlcVol : String -> String -> Html Msg
+viewAlcVol og fg =
+    let
+        alcVol =
+            calcAlcVol og fg
+    in
+        if alcVol > 0 then
+            div [] [ text ("=> " ++ (floatToFixedString alcVol) ++ "%") ]
+        else
+            text ""
 
 
 view : Model -> Html Msg
 view model =
     section [ class "calculator-section" ]
         [ h2 [] [ text "Regn ut ABV" ]
-        , myH3 model
-        , input [ placeholder "Original gravity", onInput (Change OG) ] [ text (toString model.originalGravity) ]
-        , input [ placeholder "Final gravity", onInput (Change FG) ] [ text (toString model.finalGravity) ]
-        , button [ onClick CalculateAlcVol ] [ text "Regn ut alc%" ]
+        , div [ class "calculator" ]
+            [ div [] [ text "OG:" ]
+            , input
+                [ placeholder "Original gravity"
+                , onInput (Change OG)
+                , value model.originalGravity
+                ]
+                []
+            , div [] [ text "FG:" ]
+            , input
+                [ placeholder "Final gravity"
+                , onInput (Change FG)
+                , value model.finalGravity
+                ]
+                []
+            , viewAlcVol model.originalGravity model.finalGravity
+            ]
         ]
