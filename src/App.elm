@@ -1,6 +1,7 @@
 module App exposing (..)
 
 import AlcCalc
+import Etiketter
 import Menu
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -40,7 +41,7 @@ page model =
             AlcCalc.view model.alcCalc |> Html.map CalcMsg
 
         Routing.PictureRoute ->
-            div [] [ text "Pictures coming here" ]
+            Etiketter.view
 
         Routing.NotFoundRoute ->
             div [] [ text "Not Found" ]

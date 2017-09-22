@@ -86,3 +86,11 @@ body {
   line-height: 25px;
   margin-right: 2px;
 }
+
+.image-section {
+  text-align: center;
+}
+
+.image-section > img {
+  max-width: 400px;
+}
